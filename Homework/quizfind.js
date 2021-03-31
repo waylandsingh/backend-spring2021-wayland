@@ -32,7 +32,6 @@ let quizLotto = () => {
 
     let balls = [...Array(60).keys()];
     balls.shift();
-    // console.log(balls);
 
     // occasional undefined behavior (length of array not updating in sync?)
     // for (let i = 0; i < 5; i++) {
@@ -41,6 +40,7 @@ let quizLotto = () => {
     //     ticket[i] = balls.splice(draw, 1)[0];
     // }
 
+    // draw 5 different balls
     let j = 0;
     let draw = -1;
     let drawVal = -1;
@@ -48,14 +48,14 @@ let quizLotto = () => {
         draw = Math.floor(Math.random() * 60 + 1);
         drawVal = balls[draw]
 
-        if (!(quizFind(balls, drawVal) == -1)) {
+        if (quizFind(balls, drawVal) !== -1) {
             ticket[j] = drawVal
+            j += 1;
         }
-
-        j += 1;
     }
 
-    ticket[5] = Math.floor(Math.random() * (35) + 1);
+    // pick the powerball (final) ticket number
+    ticket[5] = Math.floor(Math.random() * (36) + 1);
 
     return ticket;
 }
