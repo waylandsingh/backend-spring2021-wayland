@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The first Express Server Ever</title>
+
+    <!-- include some jquery for http POST requests note ! minified version!-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <h1>Welcome to the Website</h1>
+    <!-- note relative URL below -->
+    <p><a href="/secret">Click to go to the Secret</a></p>
+
+    <form>
+        <label for="number">Type in a number:</label>
+        <input type="number" id="number" />
+        <button>Submit your number</button>
+    </form>
+
+    <p id="result"></p>
+    <!-- jQuery function to declare and run a function to watch the button and respond -->
+    <script>
+        // change this when this gets updated
+        // maybe with some react/jquery can re-render this?
+        const baseURL = "http://localhost:3000"
+        
+        $(function () {
+            
+
+            $("button").click(function (event) {
+                event.preventDefault();
+
+                    // here is where you define the properties of the response object
+                    let sendObject = {
+                        message: "hi", 
+                        number: $("#number").val()
+                    }
+                // jQuery POST Request COULD ALSO USE REACT!
+                // Thing about asynchronous responses
+                $.post(baseURL + "/submitNumber", sendObject, function (response) {
+                    console.log("The server has responded!");
+                    $("#result").text(response);
+
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
