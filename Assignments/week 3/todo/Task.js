@@ -1,3 +1,5 @@
+const md5 = require('MD5');
+
 class Task {
     constructor(text, priority, dueDate) {
         this.setText(text);
@@ -16,6 +18,9 @@ class Task {
                 this.priority = 1;
             }
         }
+
+        this.id = md5(this.dateCreated)
+
         this.dateCompleted = null;
         this.dateDeleted = null;
     }

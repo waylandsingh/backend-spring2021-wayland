@@ -23,28 +23,47 @@ $(function () {
 		});
 
 		
+		
 	});
 });
 
-function refreshTasksList() {$.post(base_URL + "/get-tasks", {}, function(data) {
+function refreshTasksList() {
+	$.post(base_URL + "/get-tasks", {}, function(data) {
 		
-	// console.log(data) // instead of logging it, we'll instead change the page content based on this
-	let tasks = data.incompleted
+		// console.log(data) // instead of logging it, we'll instead change the page content based on this
+		let tasks = data.incompleted
 
-	// clear out old tasks
-	$("div#tasks").empty();
+		// clear out old tasks
+		$("div#tasks").empty();
 
-	// use .foreach iteration through tasks
-	tasks.forEach(element => {
-		let html = `<div class="task">
-						<button><i class="fas fa-check"></i></button>
-						<p>${element.text}  ${element.dueDate}</p>
-						
-						<button><i class="fas fa-trash-alt"></i></button>
-						<button><i class="far fa-edit"></i></button>
-					</div>`;
-		$("#tasks").append(html);
+		// use .foreach iteration through tasks
+		tasks.forEach(element => {
+			let html = `<div class="task" data-id=${element.id}>
+							<button><i class="fas fa-check"></i></button>
+							<p>${element.text}  ${element.dueDate}</p>
+							
+							<button class="delete"><i class="fas fa-trash-alt"></i></button>
+							<button><i class="far fa-edit"></i></button>
+						</div>`;
+			$("#tasks").append(html);
 
+			});
+
+
+		
+		$("button.delete").click(function() {
+			//goign to want this to execute AFTER the POST request responds successfully
+
+			let deleteObject = {
+				id: $(this).parent().attr("data-id")
+			}
+
+			$.post("/delete-task", deleteObject, function() {
+				console.log(deleteObject)
+				$(this).parent().remove();
+			});
+			
+			
 		});
 	});
 }
