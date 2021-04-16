@@ -1,0 +1,39 @@
+To-Do App
+keeps track of tasks
+	add tasks
+		Have a Section (new-task id) that offers the ability to add a task. There will an input for task, radio buttons for priority, input for Due Date, Submit button. Priority are defined by colors: red, orange, yellow, green=complete, grey
+
+https://wynd.zendesk.com/hc/en-us/articles/115007137987-The-light-colors-on-my-tracker-don-t-seem-right-
+
+	deleting tasks
+		put a large X next to each task entry in the list tasks, when clicked on, remove the task from view. makes a pop to make sure if the user intended to delete.
+	editing tasks Use AwesomeFonts for the X.
+		Create drawer of the current task that shows all information in input boxes, has a save button to save any changes. Clicking on the task will open the drawer.
+	completing tasks
+		put a large checkbox next to each task entry in list tasks, when clicked on, remove the corresponding task entry from incomplete list and move to complete list. Use AwesomeFonts for the checkmark.
+	list tasks
+		Another Section for views. One view for incomplete tasks and another for completed tasks. Display all task showing task text, priority, due date, how many its been since creation, 
+
+Feature
+	order by priority
+	login for user
+	multi-delete feature
+	random background color on load (smooth gradient from one color to another)
+	add ability to track time in addition to date.
+	Make edit/save button for each task to change task properties.
+	
+Edit Panel for later
+<div class="edit-panel">
+	<label for="task-text">Task</label>
+	<input type="text" id="task-text" />
+	<br />
+	<label for="priority-1">Priority 1</label>
+	<input type="radio" name="priority" id="priority-1" />
+	<label for="priority-2">Priority 2</label>
+	<input type="radio" name="priority" id="priority-2" />
+	<label for="priority-3">Priority 3</label>
+	<input type="radio" name="priority" id="priority-3" />
+	<br />
+	<label for="due-date">Due Date</label>
+	<input type="date" id="due-date" />
+</div>

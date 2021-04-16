@@ -4,82 +4,53 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do Application</title>
+    <title>To-Do App</title>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="./styles/main.css" />
-    <link rel="stylesheet" href="./styles/reset.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    <script src="scripts/fa.min.js"></script>
 
 
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/fa.min.css" />
+    <link rel="stylesheet" href="styles/main.css" />
 </head>
+
 <body>
+
     <div id="container">
-        <h1>Welcome To Do</h1>
-        <i class="fab fa-facebook"></i>
+        <h1>Welcome to To-Do App</h1>
+
         <section id="new-task">
-            <h2>Add a Task</h2>
-            <label for="task-text">TASK</label>
-            <input type="text" id="task-text">
-            <br />
-            <label for="priority-1">Priority 1</label>
-            <input type="radio" name="priority" id="priority-1">
-            <label for="priority-2">Priority 2</label>
-            <input type="radio" name="priority" id="priority-2">
-            <label for="priority-3">Priority 3</label>
-            <input type="radio" name="priority" id="priority-3">
-            <br />
-            <label for="due-date">Due Date</label>
-            <input type="date" id="due-date" />
-            <button>Add Task</button>
+            <h2>Add Task</h2>
+            <div>
+                <label for="task-text">Task</label>
+                <input type="text" id="task-text" />
+                <br />
+                <label for="priority-1">Priority 1</label>
+                <input type="radio" name="priority" id="priority-1" value="1" checked="checked"/>
+                <label for="priority-2">Priority 2</label>
+                <input type="radio" name="priority" id="priority-2" value="2"/>
+                <label for="priority-3">Priority 3</label>
+                <input type="radio" name="priority" id="priority-3" value="3"/>
+                <br />
+                <label for="due-date">Due Date</label>
+                <input type="date" id="due-date" required="required"/>
+                <button id="add-task">Add Task!</button>
+            </div>
         </section>
 
         <section id="task-list">
             <h2>Tasks List</h2>
-            <button>Incomplete Tasks</button>
-            <button>Completed Tasks</button>
-            
-            <div class="task">
-                <button>&#10004;</button>
-                <p>Task Text</p>
-                <button>&#10006;</button>
-                <div class="edit-panel">
-                    <label for="task-text">TASK</label>
-                    <input type="text" id="task-text" />
-                    <br />
-                    <label for="priority-1">Priority 1</label>
-                    <input type="radio" name="priority" id="priority-1" />
-                    <label for="priority-2">Priority 2</label>
-                    <input type="radio" name="priority" id="priority-2" />
-                    <label for="priority-3">Priority 3</label>
-                    <input type="radio" name="priority" id="priority-3" />
-                    <br />
-                    <label for="due-date">Due Date</label>
-                    <button>Save Changes</button>
-                </div>
-            </div>
+            <button id="incomplete-list">Incomplete Tasks</button>
+            <button id="complete-list">Completed Tasks</button>
 
-            <div class="task">
-                <button>&#10004;</button>
-                <p>Task Text</p>
-                <button>&#10006;</button>
+            <div id="tasks">
+                
             </div>
-            <div class="task">
-                <button>&#10004;</button>
-                <p>Task Text</p>
-                <button>&#10006;</button>
-            </div>
-
-
 
         </section>
-
-
     </div>
-
-    <!-- put the script here since it'll be changing the page itself -->
-    <script src="./scripts/main.js"></script>
-
+    
+    <script src="scripts/main.js"></script>
 </body>
 </html>
