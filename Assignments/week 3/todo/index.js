@@ -14,29 +14,28 @@ http.listen(port);
 
 console.log("Express server is now running on port " + port);
 
-let tasks;
+let tasks = {
+   incompleted:[]
+};
 let taskFileName = "tasks.json";
 
-// Prepare JSON tasks file
+// Prepare tasks from JSON...
 if (fs.existsSync(taskFileName)) {
-let fileContents = fs.readFileSync(taskFileName, "utf-8");
+   // Extract list of tasks from the JSON file
+   let fileContents = fs.readFileSync(taskFileName, "utf-8");
+   tasksListJSON = JSON.parse(fileContents).incompleted;
 
-// Convert JSON to 
-tasksJSON = JSON.parse(fileContents);
-// these objects are different than instantiated Task objects! change here to convert JSON -> Tasks
-// TODO: convert tasksJSON to Task objects in tasks
-// tasksJSON.foreach() // refactor here?
+   // Use objectBuild to make and push new tasks onto incompleted
+   tasksListJSON.forEach(function(obj){
+      tasks.incompleted.push(new task.Task(objectBuild=true, obj))
+   });
+// ... or create new JSON file
 } else {
-   // create file if it doesn't exist
-   tasks = {
-      incompleted: [],
-      completed: [],
-      deleted: []
-   }
-
    //write task object to filename. Necessary if thisis empty?
    fs.writeFileSync(taskFileName, JSON.stringify(tasks), "utf-8");
 }
+
+// console.log(tasks.incompleted) // check the objects loaded correctly
 
 // Body Parser
 app.use(express.json({strict: false}));
@@ -66,12 +65,16 @@ app.post("/add-task", function(req, res) {
 // Post handler for getting all of the tasks
 app.post("/get-tasks", function(req, res) {
    // respond with object that holds incomplete array of non-deleted, non completed objects
-   console.log(tasks.incompleted[0])
-   console.log('significant issue with JSON vs js objects/methods preventing successful GET /list population')
+   
+   // console.log('significant issue with JSON vs js objects/methods preventing successful GET /list population')
    
    // Filtering out deleted and completed tasks
-   let inProgress = tasks.incompleted.filter(t => (t.deleted == false))//(t.isDeleted() || t.isCompleted()))
-
+   let inProgress = tasks.incompleted.filter(function(t) {
+      if (t.isDeleted() === false) {
+         return t;
+      }
+   });
+   // console.log(inProgress)
    // Respond to the front end
    let responseObject = {incompleted: inProgress};
    res.send(responseObject);

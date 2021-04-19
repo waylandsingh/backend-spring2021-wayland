@@ -1,28 +1,47 @@
 const md5 = require('MD5');
 
+
+//TODO: refactor to match JSON file output for easy instantiation
 class Task {
-    constructor(text, priority, dueDate) {
-        this.setText(text);
+    constructor(text, priority, dueDate, objectBuild=false, obj=null) {
+        if (objectBuild) {
+            this.buildFromObject(obj)
 
-        let dateResults = this.setDueDate(dueDate);
-        if (dateResults === 1) {
-            this.dueDate = new Date();
-        }
-
-        this.dateCreated = new Date();
-        if (priority === undefined) {
-            this.priority = 1;
         } else {
-            let results = this.setPriority(priority);
-            if (results === 1) {
-                this.priority = 1;
+            // normal way to build up the Task object
+            this.setText(text);
+
+            let dateResults = this.setDueDate(dueDate);
+            if (dateResults === 1) {
+                this.dueDate = new Date();
             }
-        }
 
-        this.id = md5(this.dateCreated)
+            this.dateCreated = new Date();
+            if (priority === undefined) {
+                this.priority = 1;
+            } else {
+                let results = this.setPriority(priority);
+                if (results === 1) {
+                    this.priority = 1;
+                }
+            }
 
-        this.dateCompleted = null;
-        this.dateDeleted = null;
+            this.id = md5(this.dateCreated)
+
+            this.dateCompleted = null;
+            this.dateDeleted = null;
+        }   
+    }
+
+    buildFromObject(obj) {
+        // console.log(obj);
+        this.setText(obj.text);
+        this.setDueDate(obj.dueDate);
+        this.setPriority(obj.priority)
+        this.dateCreated = new Date(obj.dateCreated) //directly access properties. bad?
+        this.id = md5(obj.dateCreated);
+        this.dateCompleted = new Date(obj.dateCompleted);
+        this.dateDeleted = new Date(obj.dateDeleted);
     }
 
     getText() {return this.text;}
