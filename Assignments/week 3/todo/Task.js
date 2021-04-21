@@ -17,6 +17,8 @@ class Task {
             }
 
             this.dateCreated = new Date();
+            this.dueDate = new Date(dueDate);
+
             if (priority === undefined) {
                 this.priority = 1;
             } else {
@@ -26,22 +28,24 @@ class Task {
                 }
             }
 
+
+
             this.id = md5(this.dateCreated)
 
             this.dateCompleted = null;
             this.dateDeleted = null;
         }   
+        return this;
     }
 
     buildFromObject(obj) {
-        // console.log(obj);
-        this.setText(obj.text);
-        this.setDueDate(obj.dueDate);
+        this.text = obj.text;
+        this.dueDate = new Date(obj.dueDate);
         this.setPriority(obj.priority)
         this.dateCreated = new Date(obj.dateCreated) //directly access properties. bad?
         this.id = md5(obj.dateCreated);
-        this.dateCompleted = new Date(obj.dateCompleted);
-        this.dateDeleted = new Date(obj.dateDeleted);
+        this.dateCompleted = (obj.dateCompleted === null) ? null : new Date(obj.dateCompleted);
+        this.dateDeleted = (obj.dateDeleted === null) ? null : new Date(obj.dateDeleted);
     }
 
     getText() {return this.text;}
