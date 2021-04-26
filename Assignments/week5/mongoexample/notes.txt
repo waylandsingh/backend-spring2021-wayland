@@ -1,0 +1,3 @@
+Database User:
+Username: exampleUser
+password: 6O1auCPTyUkG6NFv

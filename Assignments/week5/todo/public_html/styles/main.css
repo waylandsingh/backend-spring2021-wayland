@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Slabo+27px&display=swap');
+
+/* Default Values */
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+}
+
+h1 {
+    font-family: 'Slabo 27px', serif;
+    font-size: 50px;
+    padding: 25px;
+    text-align: center;
+}
+
+
+div#container {
+    margin: 0 auto;
+    width: 80%;
+}
+
+/* New Task Section, some parts shared with Task List Section */
+section#new-task, section#task-list {
+    background-color:#2980b9;
+    color: #ecf0f1;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+section#new-task div {
+    margin: 12px;
+}
+
+section#new-task h2, section#task-list h2 {
+    padding: 12px;
+    background-color: #3498db;
+    font-weight: bold;
+}
+
+section#new-task label, div.edit-panel label {
+    padding: 12px;
+    display: inline-block;
+}
+
+section#new-task input, div.edit-panel input {
+    height: 48px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    display: inline-block;
+    vertical-align: top;
+    border-radius: 12px;
+    font-size: 1em;
+    padding-left: 12px;
+    color: #2c3e50;
+    font-family: 'Montserrat', sans-serif;
+}
+
+section#new-task input[type="radio"], div.edit-panel input[type="radio"] {
+    height: 1em;
+    width: 1em;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+}
+
+section#new-task div input:nth-child(2), div.edit-panel input:nth-child(2) {
+    width: 85%;
+    float: right;
+}
+
+section#new-task button {
+    width: 200px;
+    height: 48px;
+    border-radius: 12px;
+    border: none;
+    vertical-align: top;
+    float: right;
+    font-size: 1em;
+    color: #2c3e50;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Task List Section, overriding some New Task rules.*/
+section#task-list {
+    background-color:#8e44ad;
+    padding-bottom: 12px;
+}
+
+button#incomplete-list, button#complete-list {
+    width: 150px;
+    height: 24px;
+    border-radius: 12px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border: none;
+    margin-bottom: 12px;
+    vertical-align: top;
+    font-size: .5em;
+    color: #2c3e50;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+
+section#task-list h2 {
+    background-color: #9b59b6;
+}
+
+div.task {
+    background-color:#d35400;
+    width: 90%;
+    margin: 0 auto 12px auto;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+div.task p {
+    display: inline-block;
+    margin: 12px;
+}
+
+div.task > button {
+    width: 48px;
+    height: 48px;
+    vertical-align: top;
+    border-radius: 50%;
+    border: none;
+    background-color: inherit;
+    font-size: 1em;
+    color: #ecf0f1;
+}
+
+div.task > button:nth-child(4), div.task > button:nth-child(5) {
+    float: right;
+}
+
+div.task > button:hover {
+    background-color:#e67e22;
+}
+
+div.edit-panel {
+    background-color:#e67e22;
+    padding: 12px;
+    display: none;
+}

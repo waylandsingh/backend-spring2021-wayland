@@ -42,7 +42,7 @@ function refreshTasksList() {
 
 			let html = `<div class="task" data-id=${element.id}>
 							<button class="complete"><i class="fas fa-check"></i></button>
-							<p>${element.text} </p> 
+							<p>${element.text} ${element.dueDate}</p> 
 							
 							<button class="delete"><i class="fas fa-trash-alt"></i></button>
 							<button class="edit"><i class="far fa-edit"></i></button>
