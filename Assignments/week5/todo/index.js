@@ -57,15 +57,16 @@ app.use("/", express.static("public_html/"));
 // POST Handler for adding a new task.
 app.post("/add-task", function (req, res) {
    let taskData = req.body;
-   
-   // SANITIZE INPUT HERE BEFORE ADDING TO DATABASE
-
-   let newTask = new TodoModel({
-      text:taskData.text,
-      priority:taskData.priority,
-      dueDate:taskData.dueDate,
-
+   let newTask =  new TodoModel({
+      dateCompleted: null,
+      dateDeleted: null,
+      dateCreated: new Date() //auto type conversion on backend
    })
+   newTask.setText(taskData.text);
+   newTask.setPriority(taskData.priority);
+   newTask.setDueDate(task.dueDate);
+
+   // SANITIZE INPUT HERE BEFORE ADDING TO DATABASE
 
    newTask.save(function(err) {
       if (err) {
@@ -85,15 +86,25 @@ app.post("/get-tasks", function (req, res) {
    
    // Filter out the tasks that have been completed or deleted.
    // QUERY DATABASE for these tasks
-   
+   TodoModel.find({dateDeleted:null, dateCompleted:null}, function(error, results) {
+      if (error) {
+         console.log("failed to find all docs" + error);
+         res.sendStatus(500);
+      } else {
+         // Build an object holding all the Task objects that passed the filter test.
+         console.log(results)
+         let responseObject = {
+            incompleted:results
+            };
+         res.send(responseObject);
 
-   // Build an object holding all the Task objects that passed the filter test.
-   let responseObject = {
-      
-   };
+      }
+   });
+
+
 
    // Send the resulting object back to the front-end.
-   res.send(responseObject);
+
 });
 
 app.post("/complete-task", function (req, res) {

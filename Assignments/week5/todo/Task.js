@@ -49,6 +49,7 @@ class Task {
     getDueDate() {return this.dueDate;}
     setDueDate(dueDate) {
         // Test the provided due date string with Regular Expressions.
+        // additional regex used for MONGODB integration (parse mongo formatted dates)
         let datePattern = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
         // Test the string with our regular expression pattern.
         let validDate = datePattern.test(dueDate);
@@ -79,6 +80,7 @@ class Task {
             return 0;
         } else {
             // If it fails the test, return a 1.
+            this.dueDate = new Date();
             return 1;
         }
     }

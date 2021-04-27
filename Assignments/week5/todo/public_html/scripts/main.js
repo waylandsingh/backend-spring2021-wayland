@@ -23,11 +23,12 @@ function refreshTaskList() {
 
     $.post(base_URL + "/get-tasks", {}, function(data) {
 
-        // let tasks = data.incompleted;
-        let tasks = []; //temporary to test DB integration
+        let tasks = data.incompleted;
 
         tasks.forEach(function (task) {
-            let datePattern = /^[0-9]{4}-[0-9]{2}-[0-9]{2}/;
+            let datePattern = /(^[0-9]{4}-[0-9]{2}-[0-9]{2})/;
+            task.dueDate = new Date(task.dueDate).toISOString().match(datePattern)[0]
+            console.log(task.dueDate.match(datePattern)[0])
 
             let html = `
 <div class="task" data-id=${task.id}>
@@ -41,14 +42,14 @@ function refreshTaskList() {
         <input type="text" value="${task.text}"/>
         <br />
         <label for="priority-1">Priority 1</label>
-        <input type="radio" name="priority${task.id}" value="1" id="priority-1" ${(task.priority === 1) ? `checked="checked"` : ``}/>
+        <input type="radio" name="priority${task._id}" value="1" id="priority-1" ${(task.priority === 1) ? `checked="checked"` : ``}/>
         <label for="priority-2">Priority 2</label>
-        <input type="radio" name="priority${task.id}" value="2" id="priority-2" ${(task.priority === 2) ? `checked="checked"` : ``}/>
+        <input type="radio" name="priority${task._id}" value="2" id="priority-2" ${(task.priority === 2) ? `checked="checked"` : ``}/>
         <label for="priority-3">Priority 3</label>
-        <input type="radio" name="priority${task.id}" value="3" id="priority-3" ${(task.priority === 3) ? `checked="checked"` : ``}/>
+        <input type="radio" name="priority${task._id}" value="3" id="priority-3" ${(task.priority === 3) ? `checked="checked"` : ``}/>
         <br />
         <label for="due-date">Due Date</label>
-        <input type="date" id="due-date" value="${task.dueDate.match(datePattern)[0]}" />
+        <input type="date" id="due-date" value="${task.dueDate}" />
     </div>
 </div>`;
 
