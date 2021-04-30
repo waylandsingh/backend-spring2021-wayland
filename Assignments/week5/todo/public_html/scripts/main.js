@@ -31,7 +31,7 @@ function refreshTaskList() {
             console.log(task.dueDate.match(datePattern)[0])
 
             let html = `
-<div class="task" data-id=${task.id}>
+<div class="task" data-id=${task._id}>
     <button class="complete"><i class="fas fa-check"></i></button>
     <p>${task.text}</p><p>${task.dueDate}</p>
     <button class="delete"><i class="fas fa-trash-alt"></i></button>

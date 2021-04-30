@@ -11,6 +11,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "md5": "^2.3.0",
+    "mongo-sanitize": "^1.1.0",
     "mongoose": "^5.12.5"
   }
 }

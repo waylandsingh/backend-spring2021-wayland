@@ -1,6 +1,7 @@
 // DO NOT USE "name" as a variable name when using Node.
 
 const express = require("express");
+const sanitize = require("mongo-sanitize");
 const fs = require("fs");
 const task = require("./Task.js");
 const credentials = require('./credentials.js') // url stored in credentials.dbURL
@@ -39,6 +40,7 @@ let TaskSchema = Schema({
    dateCompleted:String
 });
 
+// Attach Task class to db docs
 TaskSchema.loadClass(task.Task);
 
 // a MODEL lets you create new task objects using the SCHEMA above
@@ -57,11 +59,15 @@ app.use("/", express.static("public_html/"));
 // POST Handler for adding a new task.
 app.post("/add-task", function (req, res) {
    let taskData = req.body;
+
+   // Build Mongoose Object
    let newTask =  new TodoModel({
       dateCompleted: null,
       dateDeleted: null,
       dateCreated: new Date() //auto type conversion on backend
    })
+
+   // set Mongoose Object values
    newTask.setText(taskData.text);
    newTask.setPriority(taskData.priority);
    newTask.setDueDate(task.dueDate);
@@ -84,8 +90,7 @@ app.post("/add-task", function (req, res) {
 // POST Handler for getting all tasks.
 app.post("/get-tasks", function (req, res) {
    
-   // Filter out the tasks that have been completed or deleted.
-   // QUERY DATABASE for these tasks
+   // Query DB for non-complete, non-deleted tasks
    TodoModel.find({dateDeleted:null, dateCompleted:null}, function(error, results) {
       if (error) {
          console.log("failed to find all docs" + error);
@@ -93,74 +98,102 @@ app.post("/get-tasks", function (req, res) {
       } else {
          // Build an object holding all the Task objects that passed the filter test.
          console.log(results)
+         // Create object to send to front end: holds results of query
          let responseObject = {
             incompleted:results
             };
          res.send(responseObject);
-
       }
    });
-
-
-
-   // Send the resulting object back to the front-end.
-
 });
 
 app.post("/complete-task", function (req, res) {
 
-   let id = req.body.id;
+   let _id = req.body.id;
 
-   // Go through each task in the tasks array and find the one with the matching ID.
-   for (let i = 0; i < tasks.incompleted.length; i++) {
-      if (tasks.incompleted[i].id === id) {
-         // If ID matches them mark the Task Object deleted.
-         tasks.incompleted[i].markCompleted();
-         break;
+   // Find matching ID to mark complete
+   TodoModel.find({_id:_id}, function(error,results) {
+      if (error) {
+
+      } else {
+         results[0].markCompleted();
+         results[0].save(function(error) {
+            if (error) {
+               console.log(error);
+               res.send(500);
+            } else {
+               res.send({})    // Just send a message to the front-end.
+
+            }
+         });
       }
-   }
-
-   saveFile();
-
-   // Just send a message to the front-end.
-   res.send({});
+   });
 });
 
-// POST Handler for deleting a single task.
+// POST Handler for marking a task deleted
 app.post("/delete-task", function (req, res) {
 
-   let id = req.body.id;
+   let _id = req.body.id;
 
-   // Go through each task in the tasks array and find the one with the matching ID.
-   for (let i = 0; i < tasks.incompleted.length; i++) {
-      if (tasks.incompleted[i].id === id) {
-         // If ID matches them mark the Task Object deleted.
-         tasks.incompleted[i].markDeleted();
-         break;
+   // Mark the matched ID task deleted
+   TodoModel.find({_id:_id}, function(error,results) {
+      if (error) {
+
+      } else {
+         results[0].markDeleted();
+         results[0].save(function(error) {
+            if (error) {
+               console.log(error);
+               res.send(500);
+            } else {
+               res.send({})    // Just send a message to the front-end.
+
+            }
+         });
       }
-   }
-
-   saveFile();
-
-   // Just send a message to the front-end.
-   res.send({});
+   });
 });
 
+// POST handler for updating DB entries
 app.post("/update-task", function (req, res) {
-   let id = req.body.id;
+   console.log(req.body)
+   let _id = req.body.id;
    let updates = req.body;
 
-   for (let i = 0; i < tasks.incompleted.length; i++) {
-      if (id === tasks.incompleted[i].id) {
-         tasks.incompleted[i].setText(updates.text);
-         tasks.incompleted[i].setDueDate(updates.dueDate);
-         tasks.incompleted[i].setPriority(updates.priority);
+   delete updates._id;
+
+   TodoModel.find({_id:_id}, function (error, results) {
+      if (error) {
+
+      } else {
+         // Update DB objects using setters
+         results[0].setText(sanitize(updates.text)); // santize the mongodb query
+         results[0].setPriority(updates.priority);
+         results[0].setDueDate(updates.dueDate);
+
+         // save results and send response based on the save
+         results[0].save(function(error){
+            if (error) {
+               console.log(error);
+               res.sendStatus(500)
+            } else {
+               res.send({});
+            }
+         })
       }
-   }
+   });
 
-   saveFile();
+   // for (let i = 0; i < tasks.incompleted.length; i++) {
+   //    if (id === tasks.incompleted[i].id) {
+   //       tasks.incompleted[i].setText(updates.text);
+   //       tasks.incompleted[i].setDueDate(updates.dueDate);
+   //       tasks.incompleted[i].setPriority(updates.priority);
+   //    }
+   // }
 
-   res.send({});
+   // saveFile();
+
+   
 });
 
 
