@@ -1,0 +1,10 @@
+Police Department Incident Reports: 2018 to Present
+https://data.sfgov.org/Public-Safety/Police-Department-Incident-Reports-2018-to-Present/wg3w-h783
+
+Question 1: What is the most common and least common type of incident that are open/active.
+Question 2: What day of the week is (on average) the most active? What hour (on average) for the week?
+Question 3: Which neighborhood is the most active and least active? Supervisor district?
+Question 4: How many open/active vs closed? Per Year? Per Month?
+Question 5: What street has the most activity?
+Bonus Question: What percentage of crime type (open/active) per neighorhood? Per District?
+Bonus Question: Has domestic violence gone up in San Francisco for the year 2020.
